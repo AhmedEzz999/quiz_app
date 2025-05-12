@@ -2,10 +2,11 @@ import 'package:quiz_app/models/question_model.dart';
 
 List<QuestionModel> questionList = [
   QuestionModel(
-    question: 'Which of the following are planets in our solar system?',
-    choices: ['Pluto', 'Mars', 'Venus', 'Jupiter'],
-    answers: ['Mars', 'Venus', 'Jupiter'],
-    isRadio: false,
+    question:
+        'How would you describe your level of satisfaction with the healthcare system?',
+    choices: ['Strongly Satisfied', 'Satisfied', 'Neutral', 'Not satisfied'],
+    answers: ['Strongly Satisfied', 'Satisfied', 'Neutral', 'Not satisfied'],
+    isRadio: true,
   ),
   QuestionModel(
     question: 'Who discovered penicillin?',
@@ -19,9 +20,15 @@ List<QuestionModel> questionList = [
     isRadio: true,
   ),
   QuestionModel(
-    question: 'Which elements are gases at room temperature?',
-    choices: ['Oxygen', 'Nitrogen', 'Mercury', 'Hydrogen'],
-    answers: ['Oxygen', 'Nitrogen', 'Hydrogen'],
+    question: 'What vitamins do you take?',
+    choices: ['Vitamin D3', 'Vitamin B', 'Zinc', 'Magnesium'],
+    answers: ['Vitamin D3', 'Zinc'],
+    isRadio: false,
+  ),
+  QuestionModel(
+    question: 'Which of the following are planets in our solar system?',
+    choices: ['Pluto', 'Mars', 'Venus', 'Jupiter'],
+    answers: ['Mars', 'Venus', 'Jupiter'],
     isRadio: false,
   ),
   QuestionModel(
@@ -29,6 +36,12 @@ List<QuestionModel> questionList = [
     choices: ['1939', '1943', '1945', '1950'],
     answers: ['1945'],
     isRadio: true,
+  ),
+  QuestionModel(
+    question: 'Which elements are gases at room temperature?',
+    choices: ['Oxygen', 'Nitrogen', 'Mercury', 'Hydrogen'],
+    answers: ['Oxygen', 'Nitrogen', 'Hydrogen'],
+    isRadio: false,
   ),
   QuestionModel(
     question:

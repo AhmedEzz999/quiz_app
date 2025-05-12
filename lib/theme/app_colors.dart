@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
 abstract class AppColors {
-  static const Color primaryColor = Color(0xFF2B0063);
-  static const Color secondaryColor = Color(0xFF000000);
-  static const Color tertiaryColor = Color(0xFF000000);
+  static const Color primaryColor = Color(0xFF131428);
+  static const Color secondaryColor = Color(0xFF8E84FF);
+  static const Color selectedColor = Color(0xFFB8B2FF);
+  static const Color unselectedColor = Color(0xFFFFFFFF);
+  static const Color nextButtonColor = Color(0xFFA838FF);
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 
 class NextButton extends StatelessWidget {
-  const NextButton({super.key});
+  final VoidCallback onPressed;
+  const NextButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class NextButton extends StatelessWidget {
         backgroundColor: AppColors.nextButtonColor,
         elevation: 0,
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Row(
         children: [
           Text(

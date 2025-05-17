@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiz_app/constants/app_images.dart';
+import 'package:quiz_app/models/questions_list.dart';
 import 'package:quiz_app/theme/app_colors.dart';
+import 'package:quiz_app/views/home_view.dart';
+import 'package:quiz_app/views/result_view.dart';
 import 'package:quiz_app/widgets/back_button.dart';
 import 'package:quiz_app/widgets/next_button.dart';
 import 'package:quiz_app/widgets/question_item.dart';
@@ -14,7 +17,36 @@ class QuestionsView extends StatefulWidget {
 }
 
 class _QuestionsViewState extends State<QuestionsView> {
-  int questionNumber = 5;
+  int questionNumber = 0;
+  final int totalQuestions = questionList.length;
+
+  void _goToNextQuestion() {
+    if (questionNumber < totalQuestions - 1) {
+      questionList[questionNumber + 1].userAnswers.clear();
+      setState(() {
+        questionNumber++;
+      });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ResultView()),
+      );
+    }
+  }
+
+  void _goToPreviousQuestion() {
+    questionList[questionNumber].userAnswers.clear();
+    if (questionNumber > 0) {
+      setState(() {
+        questionNumber--;
+      });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeView()),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +85,16 @@ class _QuestionsViewState extends State<QuestionsView> {
                     ],
                   ),
                 ),
-                QuestionItem(questionNumber: questionNumber),
+                QuestionItem(
+                  key: ValueKey(questionNumber),
+                  questionNumber: questionNumber,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [ButtonBack(), NextButton()],
+                  children: [
+                    ButtonBack(onPressed: _goToPreviousQuestion),
+                    NextButton(onPressed: _goToNextQuestion),
+                  ],
                 ),
                 SizedBox(height: 60),
               ],

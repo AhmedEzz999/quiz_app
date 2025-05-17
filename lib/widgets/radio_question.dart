@@ -33,23 +33,35 @@ class _RadioQuestionState extends State<RadioQuestion> {
             String choice = questionList[widget.questionNumber].choices[index];
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: RadioListTile<String>(
-                shape: RoundedRectangleBorder(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                contentPadding: EdgeInsets.all(8),
-                tileColor:
-                    _selectedValue == choice
-                        ? AppColors.selectedColor
-                        : AppColors.unselectedColor,
-                title: Text(choice, style: TextStyle(fontSize: 20)),
-                value: choice,
-                groupValue: _selectedValue,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedValue = value;
-                  });
-                },
+                child: RadioListTile<String>(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  contentPadding: const EdgeInsets.all(8),
+                  tileColor:
+                      _selectedValue == choice
+                          ? AppColors.selectedColor
+                          : AppColors.unselectedColor,
+                  title: Text(choice, style: TextStyle(fontSize: 20)),
+                  value: choice,
+                  groupValue: _selectedValue,
+                  onChanged: (value) {
+                    final List<String> userAnswers =
+                        questionList[widget.questionNumber].userAnswers;
+                    setState(() {
+                      _selectedValue = value;
+                      userAnswers.clear();
+                      if (value != null) {
+                        userAnswers.add(value);
+                      }
+                    });
+                  },
+                ),
               ),
             );
           },

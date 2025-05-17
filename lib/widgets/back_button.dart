@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 
 class ButtonBack extends StatelessWidget {
-  const ButtonBack({super.key});
+  final VoidCallback onPressed;
+  const ButtonBack({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class ButtonBack extends StatelessWidget {
         elevation: 0,
         side: BorderSide(color: AppColors.secondaryColor, width: 2.0),
       ),
-      onPressed: () {},
+      onPressed: onPressed,
       child: Row(
         children: [
           Icon(

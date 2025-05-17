@@ -44,7 +44,7 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
               padding: const EdgeInsets.only(bottom: 20),
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(15),
                   color:
                       _selectedValues[index]
                           ? AppColors.selectedColor
@@ -56,8 +56,17 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
                   title: Text(choice, style: TextStyle(fontSize: 20)),
                   value: _selectedValues[index],
                   onChanged: (bool? value) {
+                    final List<String> userAnswers =
+                        questionList[widget.questionNumber].userAnswers;
                     setState(() {
                       _selectedValues[index] = value ?? false;
+                      if (value ?? false) {
+                        if (!userAnswers.contains(choice)) {
+                          userAnswers.add(choice);
+                        }
+                      } else {
+                        userAnswers.remove(choice);
+                      }
                     });
                   },
                 ),

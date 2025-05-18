@@ -8,6 +8,7 @@ import 'package:quiz_app/views/result_view.dart';
 import 'package:quiz_app/widgets/back_button.dart';
 import 'package:quiz_app/widgets/next_button.dart';
 import 'package:quiz_app/widgets/question_item.dart';
+import 'package:quiz_app/widgets/show_dialog.dart';
 
 class QuestionsView extends StatefulWidget {
   const QuestionsView({super.key});
@@ -35,21 +36,26 @@ class _QuestionsViewState extends State<QuestionsView> {
   }
 
   void _goToNextQuestion() {
-    if (questionNumber < totalQuestions - 1) {
-      final List<bool> isCorrectList =
-          correctAnswers.map((answer) => userAnswers.contains(answer)).toList();
-      final bool isCorrect = isCorrectList.every((answer) => answer == true);
-      totalAnswers.add(isCorrect);
-      setState(() {
-        questionNumber++;
-        _updateCurrentQuestionData();
-      });
+    if (userAnswers.isNotEmpty) {
+      if (questionNumber < totalQuestions - 1) {
+        checkAnswers();
+        setState(() {
+          questionNumber++;
+          _updateCurrentQuestionData();
+        });
+      } else {
+        checkAnswers();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultView(answers: totalAnswers),
+          ),
+        );
+      }
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultView(answers: totalAnswers),
-        ),
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => const ShowDialog(),
       );
     }
   }
@@ -68,6 +74,13 @@ class _QuestionsViewState extends State<QuestionsView> {
         MaterialPageRoute(builder: (context) => const HomeView()),
       );
     }
+  }
+
+  void checkAnswers() {
+    final List<bool> isCorrectList =
+        correctAnswers.map((answer) => userAnswers.contains(answer)).toList();
+    final bool isCorrect = isCorrectList.every((answer) => answer == true);
+    totalAnswers.add(isCorrect);
   }
 
   @override

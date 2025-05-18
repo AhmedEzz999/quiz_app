@@ -11,8 +11,8 @@ class ResultView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Your Score is $totalScore/${questionList.length}',
-          style: const TextStyle(color: Colors.white, fontSize: 32),
+          'Your score is $totalScore/${questionList.length}',
+          style: const TextStyle(color: Colors.white, fontSize: 30),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 41, 51, 68),
@@ -43,12 +43,22 @@ class ResultView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Text(
-                        'Your Answer: ${questionList[index].userAnswers.join(', ')}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Color(0xFF929BAC),
-                        ),
+                      Row(
+                        children: [
+                          Icon(
+                            answers[index] ? Icons.check_circle : Icons.cancel,
+                            color: answers[index] ? Colors.green : Colors.red,
+                            size: 24,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Your Answer: ${questionList[index].userAnswers.join(', ')}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF929BAC),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Text(

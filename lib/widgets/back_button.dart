@@ -10,13 +10,13 @@ class ButtonBack extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        side: BorderSide(color: AppColors.secondaryColor, width: 2.0),
+        side: const BorderSide(color: AppColors.secondaryColor, width: 2.0),
       ),
       onPressed: onPressed,
-      child: Row(
+      child: const Row(
         children: [
           Icon(
             Icons.arrow_back_ios_new,

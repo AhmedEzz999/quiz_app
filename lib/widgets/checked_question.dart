@@ -32,11 +32,11 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
       children: [
         Text(
           question,
-          style: TextStyle(color: AppColors.unselectedColor, fontSize: 33),
+          style: const TextStyle(color: AppColors.unselectedColor, fontSize: 33),
         ),
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: choicesNumber,
           itemBuilder: (context, index) {
             String choice = questionList[widget.questionNumber].choices[index];
@@ -52,8 +52,8 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
                 ),
                 child: CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  contentPadding: EdgeInsets.all(8),
-                  title: Text(choice, style: TextStyle(fontSize: 20)),
+                  contentPadding: const EdgeInsets.all(8),
+                  title: Text(choice, style: const TextStyle(fontSize: 20)),
                   value: _selectedValues[index],
                   onChanged: (bool? value) {
                     final List<String> userAnswers =

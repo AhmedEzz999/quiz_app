@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/models/questions_list.dart';
 import 'package:quiz_app/views/questions_view.dart';
 
 class StartQuizButton extends StatelessWidget {
@@ -8,20 +9,23 @@ class StartQuizButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        for (var question in questionList) {
+          question.userAnswers.clear();
+        }
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => QuestionsView()),
+          MaterialPageRoute(builder: (context) => const QuestionsView()),
         );
       },
       child: Container(
         width: double.infinity,
         height: 60,
-        margin: EdgeInsets.symmetric(vertical: 35),
+        margin: const EdgeInsets.symmetric(vertical: 35),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Center(
+        child: const Center(
           child: Text('Start Quiz', style: TextStyle(fontSize: 27)),
         ),
       ),

@@ -19,17 +19,37 @@ class QuestionsView extends StatefulWidget {
 class _QuestionsViewState extends State<QuestionsView> {
   int questionNumber = 0;
   final int totalQuestions = questionList.length;
+  late List<String> userAnswers;
+  late List<String> correctAnswers;
+  final List<bool> totalAnswers = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _updateCurrentQuestionData();
+  }
+
+  void _updateCurrentQuestionData() {
+    userAnswers = questionList[questionNumber].userAnswers;
+    correctAnswers = questionList[questionNumber].correctAnswers;
+  }
 
   void _goToNextQuestion() {
     if (questionNumber < totalQuestions - 1) {
-      questionList[questionNumber + 1].userAnswers.clear();
+      final List<bool> isCorrectList =
+          correctAnswers.map((answer) => userAnswers.contains(answer)).toList();
+      final bool isCorrect = isCorrectList.every((answer) => answer == true);
+      totalAnswers.add(isCorrect);
       setState(() {
         questionNumber++;
+        _updateCurrentQuestionData();
       });
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ResultView()),
+        MaterialPageRoute(
+          builder: (context) => ResultView(answers: totalAnswers),
+        ),
       );
     }
   }
@@ -39,6 +59,8 @@ class _QuestionsViewState extends State<QuestionsView> {
     if (questionNumber > 0) {
       setState(() {
         questionNumber--;
+        _updateCurrentQuestionData();
+        totalAnswers.removeLast();
       });
     } else {
       Navigator.pushReplacement(
@@ -55,7 +77,7 @@ class _QuestionsViewState extends State<QuestionsView> {
       backgroundColor: AppColors.primaryColor,
       body: Stack(
         children: [
-          Image(image: AssetImage(AppImages.gradient)),
+          const Image(image: AssetImage(AppImages.gradient)),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
@@ -64,8 +86,8 @@ class _QuestionsViewState extends State<QuestionsView> {
               children: [
                 Container(
                   height: 55,
-                  margin: EdgeInsets.only(top: 80, bottom: 30),
-                  padding: EdgeInsets.all(10),
+                  margin: const EdgeInsets.only(top: 80, bottom: 30),
+                  padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: AppColors.secondaryColor,
                     borderRadius: BorderRadius.circular(25),
@@ -77,10 +99,13 @@ class _QuestionsViewState extends State<QuestionsView> {
                         AppImages.question(imageIndex),
                         width: 22,
                       ),
-                      SizedBox(width: 15),
+                      const SizedBox(width: 15),
                       Text(
                         'Question ${questionNumber + 1}',
-                        style: TextStyle(color: Colors.white, fontSize: 22),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
                       ),
                     ],
                   ),
@@ -96,7 +121,7 @@ class _QuestionsViewState extends State<QuestionsView> {
                     NextButton(onPressed: _goToNextQuestion),
                   ],
                 ),
-                SizedBox(height: 60),
+                const SizedBox(height: 60),
               ],
             ),
           ),

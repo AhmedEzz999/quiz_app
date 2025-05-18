@@ -23,11 +23,11 @@ class _RadioQuestionState extends State<RadioQuestion> {
       children: [
         Text(
           question,
-          style: TextStyle(color: AppColors.unselectedColor, fontSize: 33),
+          style: const TextStyle(color: AppColors.unselectedColor, fontSize: 33),
         ),
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: choicesNumber,
           itemBuilder: (context, index) {
             String choice = questionList[widget.questionNumber].choices[index];
@@ -47,7 +47,7 @@ class _RadioQuestionState extends State<RadioQuestion> {
                       _selectedValue == choice
                           ? AppColors.selectedColor
                           : AppColors.unselectedColor,
-                  title: Text(choice, style: TextStyle(fontSize: 20)),
+                  title: Text(choice, style: const TextStyle(fontSize: 20)),
                   value: choice,
                   groupValue: _selectedValue,
                   onChanged: (value) {

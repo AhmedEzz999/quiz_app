@@ -10,12 +10,12 @@ class NextButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         backgroundColor: AppColors.nextButtonColor,
         elevation: 0,
       ),
       onPressed: onPressed,
-      child: Row(
+      child: const Row(
         children: [
           Text(
             'Next',

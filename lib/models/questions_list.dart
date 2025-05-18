@@ -1,13 +1,18 @@
 import 'package:quiz_app/models/question_model.dart';
 
 List<QuestionModel> questionList = [
-  QuestionModel(
-    question:
-        'How would you describe your level of satisfaction with the healthcare system?',
-    choices: ['Strongly Satisfied', 'Satisfied', 'Neutral', 'Not satisfied'],
-    answers: ['Strongly Satisfied', 'Satisfied', 'Neutral', 'Not satisfied'],
-    isRadio: true,
-  ),
+  // QuestionModel(
+  //   question:
+  //       'How would you describe your level of satisfaction with the healthcare system?',
+  //   choices: ['Strongly Satisfied', 'Satisfied', 'Neutral', 'Not satisfied'],
+  //   correctAnswers: [
+  //     'Strongly Satisfied',
+  //     'Satisfied',
+  //     'Neutral',
+  //     'Not satisfied',
+  //   ],
+  //   isRadio: true,
+  // ),
   QuestionModel(
     question: 'Who discovered penicillin?',
     choices: [
@@ -16,19 +21,19 @@ List<QuestionModel> questionList = [
       'Alexander Fleming',
       'Albert Einstein',
     ],
-    answers: ['Alexander Fleming'],
+    correctAnswers: ['Alexander Fleming'],
     isRadio: true,
   ),
   QuestionModel(
     question: 'What vitamins do you take?',
     choices: ['Vitamin D3', 'Vitamin B', 'Zinc', 'Magnesium'],
-    answers: ['Vitamin D3', 'Zinc'],
+    correctAnswers: ['Vitamin D3', 'Zinc'],
     isRadio: false,
   ),
   QuestionModel(
     question: 'Which of the following are planets in our solar system?',
     choices: ['Pluto', 'Mars', 'Venus', 'Jupiter'],
-    answers: ['Mars', 'Venus', 'Jupiter'],
+    correctAnswers: ['Mars', 'Venus', 'Jupiter'],
     isRadio: false,
   ),
   // QuestionModel(

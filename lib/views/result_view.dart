@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/questions_list.dart';
-import 'package:quiz_app/theme/app_colors.dart';
 
 class ResultView extends StatelessWidget {
-  const ResultView({super.key});
+  final List<bool> answers;
+  const ResultView({super.key, required this.answers});
 
   @override
   Widget build(BuildContext context) {
+    final int totalScore = answers.where((answer) => answer == true).length;
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
       appBar: AppBar(
-        title: Text('The Result', style: TextStyle(color: Colors.white)),
+        title: Text(
+          'Your Score is $totalScore/${questionList.length}',
+          style: const TextStyle(color: Colors.white, fontSize: 32),
+        ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 54, 94, 109),
+        backgroundColor: const Color.fromARGB(255, 41, 51, 68),
       ),
+      backgroundColor: const Color(0xFF1E2532),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 25),
@@ -25,7 +29,7 @@ class ResultView extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: Colors.blueAccent,
+                    color: const Color(0xFF252E40),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
@@ -33,19 +37,25 @@ class ResultView extends StatelessWidget {
                     children: [
                       Text(
                         'Question ${index + 1}: ${questionList[index].question}',
-                        style: TextStyle(fontSize: 20),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         'Your Answer: ${questionList[index].userAnswers.join(', ')}',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Correct Answer: ${questionList[index].answers}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
-                          color: const Color.fromARGB(255, 255, 245, 106),
+                          color: Color(0xFF929BAC),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'Correct Answer: ${questionList[index].correctAnswers.join(', ')}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Color(0xFFABDB9D),
                         ),
                       ),
                     ],

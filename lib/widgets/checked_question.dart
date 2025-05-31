@@ -17,9 +17,12 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
   @override
   void initState() {
     super.initState();
-    _selectedValues = List<bool>.filled(
-      questionList[widget.questionNumber].choices.length,
-      false,
+    final List<String> choices = questionList[widget.questionNumber].choices;
+    final List<String> userAnswers = questionList[widget.questionNumber].userAnswers;
+
+    _selectedValues = List<bool>.generate(
+      choices.length,
+      (index) => userAnswers.contains(choices[index]),
     );
   }
 

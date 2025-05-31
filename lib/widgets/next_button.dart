@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/constants/questions_list.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 
 class NextButton extends StatelessWidget {
+  final int questionNumber;
   final VoidCallback onPressed;
-  const NextButton({super.key, required this.onPressed});
+  const NextButton({
+    super.key,
+    required this.onPressed,
+    required this.questionNumber,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +21,17 @@ class NextButton extends StatelessWidget {
         elevation: 0,
       ),
       onPressed: onPressed,
-      child: const Row(
+      child: Row(
         children: [
           Text(
-            'Next',
-            style: TextStyle(fontSize: 25, color: AppColors.unselectedColor),
+            questionNumber + 1 < questionList.length ? 'Next' : 'Finish',
+            style: const TextStyle(
+              fontSize: 25,
+              color: AppColors.unselectedColor,
+            ),
           ),
-          SizedBox(width: 15),
-          Icon(
+          const SizedBox(width: 15),
+          const Icon(
             Icons.arrow_forward_ios_outlined,
             size: 25,
             color: AppColors.unselectedColor,

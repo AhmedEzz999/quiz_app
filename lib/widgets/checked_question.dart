@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/models/questions_list.dart';
+import 'package:quiz_app/constants/questions_list.dart';
+import 'package:quiz_app/models/question_manager.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 
 class CheckedQuestion extends StatefulWidget {
@@ -32,7 +33,10 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
       children: [
         Text(
           question,
-          style: const TextStyle(color: AppColors.unselectedColor, fontSize: 33),
+          style: const TextStyle(
+            color: AppColors.unselectedColor,
+            fontSize: 33,
+          ),
         ),
         ListView.builder(
           shrinkWrap: true,
@@ -55,17 +59,19 @@ class _CheckedQuestionState extends State<CheckedQuestion> {
                   contentPadding: const EdgeInsets.all(8),
                   title: Text(choice, style: const TextStyle(fontSize: 20)),
                   value: _selectedValues[index],
-                  onChanged: (bool? value) {
-                    final List<String> userAnswers =
-                        questionList[widget.questionNumber].userAnswers;
+                  onChanged: (value) {
                     setState(() {
-                      _selectedValues[index] = value ?? false;
-                      if (value ?? false) {
-                        if (!userAnswers.contains(choice)) {
-                          userAnswers.add(choice);
-                        }
+                      _selectedValues[index] = value!;
+                      if (value) {
+                        QuestionManager.addAnswerInCheckedQuestion(
+                          questionNumber: widget.questionNumber,
+                          choiceIndex: index,
+                        );
                       } else {
-                        userAnswers.remove(choice);
+                        QuestionManager.removeAnswerInCheckedQuestion(
+                          questionNumber: widget.questionNumber,
+                          choiceIndex: index,
+                        );
                       }
                     });
                   },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/models/questions_list.dart';
+import 'package:quiz_app/constants/questions_list.dart';
 import 'package:quiz_app/widgets/checked_question.dart';
 import 'package:quiz_app/widgets/radio_question.dart';
 

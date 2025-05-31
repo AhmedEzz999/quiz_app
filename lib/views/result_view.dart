@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/models/questions_list.dart';
+import 'package:quiz_app/constants/questions_list.dart';
 
 class ResultView extends StatelessWidget {
-  final List<bool> answers;
-  const ResultView({super.key, required this.answers});
+  final int totalScore;
+  const ResultView({super.key, required this.totalScore});
 
   @override
   Widget build(BuildContext context) {
-    final int totalScore = answers.where((answer) => answer == true).length;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -44,18 +43,30 @@ class ResultView extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 10,
                         children: [
                           Icon(
-                            answers[index] ? Icons.check_circle : Icons.cancel,
-                            color: answers[index] ? Colors.green : Colors.red,
+                            questionList[index].answeredRight!
+                                ? Icons.check_circle
+                                : Icons.cancel,
+                            color:
+                                questionList[index].answeredRight!
+                                    ? Colors.green
+                                    : Colors.red,
                             size: 24,
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Your Answer: ${questionList[index].userAnswers.join(', ')}',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFF929BAC),
+                          Expanded(
+                            child: FittedBox(
+                              alignment: Alignment.topLeft,
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                'Your Answer: ${questionList[index].userAnswers.join(', ')}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFF929BAC),
+                                ),
+                              ),
                             ),
                           ),
                         ],

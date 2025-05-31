@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/models/questions_list.dart';
+import 'package:quiz_app/constants/questions_list.dart';
+import 'package:quiz_app/models/question_manager.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 
 class RadioQuestion extends StatefulWidget {
@@ -14,6 +15,14 @@ class _RadioQuestionState extends State<RadioQuestion> {
   String? _selectedValue;
 
   @override
+  void initState() {
+    super.initState();
+    if (questionList[widget.questionNumber].userAnswers.isNotEmpty) {
+      _selectedValue = questionList[widget.questionNumber].userAnswers.first;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     String question = questionList[widget.questionNumber].question;
     int choicesNumber = questionList[widget.questionNumber].choices.length;
@@ -23,7 +32,10 @@ class _RadioQuestionState extends State<RadioQuestion> {
       children: [
         Text(
           question,
-          style: const TextStyle(color: AppColors.unselectedColor, fontSize: 33),
+          style: const TextStyle(
+            color: AppColors.unselectedColor,
+            fontSize: 33,
+          ),
         ),
         ListView.builder(
           shrinkWrap: true,
@@ -51,14 +63,12 @@ class _RadioQuestionState extends State<RadioQuestion> {
                   value: choice,
                   groupValue: _selectedValue,
                   onChanged: (value) {
-                    final List<String> userAnswers =
-                        questionList[widget.questionNumber].userAnswers;
                     setState(() {
                       _selectedValue = value;
-                      userAnswers.clear();
-                      if (value != null) {
-                        userAnswers.add(value);
-                      }
+                      QuestionManager.selectAnswerInRadioQuestion(
+                        choice: value!,
+                        questionNumber: widget.questionNumber,
+                      );
                     });
                   },
                 ),

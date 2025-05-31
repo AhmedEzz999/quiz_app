@@ -4,6 +4,7 @@ class QuestionModel {
   final List<String> correctAnswers;
   final List<String> userAnswers = [];
   final bool isRadio;
+  bool? answeredRight;
 
   QuestionModel({
     required this.question,

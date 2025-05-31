@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quiz_app/constants/app_images.dart';
-import 'package:quiz_app/models/questions_list.dart';
+import 'package:quiz_app/constants/questions_list.dart';
+import 'package:quiz_app/models/question_manager.dart';
 import 'package:quiz_app/theme/app_colors.dart';
 import 'package:quiz_app/views/home_view.dart';
 import 'package:quiz_app/views/result_view.dart';
@@ -19,36 +20,24 @@ class QuestionsView extends StatefulWidget {
 
 class _QuestionsViewState extends State<QuestionsView> {
   int questionNumber = 0;
+  int totalScore = 0;
   final int totalQuestions = questionList.length;
-  late List<String> userAnswers;
-  late List<String> correctAnswers;
-  final List<bool> totalAnswers = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _updateCurrentQuestionData();
-  }
-
-  void _updateCurrentQuestionData() {
-    userAnswers = questionList[questionNumber].userAnswers;
-    correctAnswers = questionList[questionNumber].correctAnswers;
-  }
 
   void _goToNextQuestion() {
-    if (userAnswers.isNotEmpty) {
-      if (questionNumber < totalQuestions - 1) {
-        checkAnswers();
+    if (questionList[questionNumber].userAnswers.isNotEmpty) {
+      if (questionNumber + 1 < totalQuestions) {
+        QuestionManager.checkAnswer(questionNumber: questionNumber);
+        questionList[questionNumber].answeredRight! ? totalScore++ : totalScore;
         setState(() {
           questionNumber++;
-          _updateCurrentQuestionData();
         });
       } else {
-        checkAnswers();
+        QuestionManager.checkAnswer(questionNumber: questionNumber);
+        questionList[questionNumber].answeredRight! ? totalScore++ : totalScore;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ResultView(answers: totalAnswers),
+            builder: (context) => ResultView(totalScore: totalScore),
           ),
         );
       }
@@ -61,12 +50,12 @@ class _QuestionsViewState extends State<QuestionsView> {
   }
 
   void _goToPreviousQuestion() {
-    questionList[questionNumber].userAnswers.clear();
     if (questionNumber > 0) {
+      questionList[questionNumber - 1].answeredRight!
+          ? totalScore--
+          : totalScore;
       setState(() {
         questionNumber--;
-        _updateCurrentQuestionData();
-        totalAnswers.removeLast();
       });
     } else {
       Navigator.pushReplacement(
@@ -74,13 +63,6 @@ class _QuestionsViewState extends State<QuestionsView> {
         MaterialPageRoute(builder: (context) => const HomeView()),
       );
     }
-  }
-
-  void checkAnswers() {
-    final List<bool> isCorrectList =
-        correctAnswers.map((answer) => userAnswers.contains(answer)).toList();
-    final bool isCorrect = isCorrectList.every((answer) => answer == true);
-    totalAnswers.add(isCorrect);
   }
 
   @override
@@ -131,7 +113,10 @@ class _QuestionsViewState extends State<QuestionsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ButtonBack(onPressed: _goToPreviousQuestion),
-                    NextButton(onPressed: _goToNextQuestion),
+                    NextButton(
+                      onPressed: _goToNextQuestion,
+                      questionNumber: questionNumber,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 60),
